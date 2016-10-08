@@ -6,8 +6,6 @@ int main(void)
     for (scanf("%d", &co); co > 0; co--)
     {
         scanf("%d", &day);
-        while (day < 1 || day > 92)
-            scanf("%d", &day);
         for (i = 0; i < day; i++)
             scanf("%d", &count[i]);
         if (day == 1)
