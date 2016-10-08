@@ -4,13 +4,9 @@ int main(void)
     int co, day, i;
     for (scanf("%d", &co); co > 0; co--)
     {
-        while (getchar() != '\n')
-            continue;
         scanf("%d", &day);
         while (day < 1 || day > 92)
             scanf("%d", &day);
-        while (getchar() != '\n')
-            continue;
         int count[day];
         for (i = 0; i < day; i++)
             scanf("%d", &count[i]);
