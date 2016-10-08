@@ -1,0 +1,40 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "gdb",
+            "request": "launch",
+            "target": "${file}.o",
+            "cwd": "${workspaceRoot}",
+            "terminal": "",
+            "preLaunchTask": "gcc"
+        },
+        {
+            "name": "C Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${file}.o",
+            "externalConsole": false,
+            "args": [
+                 "-t","$TITLE","-x"
+            ],
+            "preLaunchTask": "gcc",
+            "cwd": "${workspaceRoot}",
+            "linux": {
+                "MIMode": "gdb"
+            }
+        },
+        {
+            "name": "C Attach",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "${file}.o",
+            "processId": "${command.pickProcess}",
+            "linux": {
+                "MIMode": "gdb"
+            }
+        }
+    ]
+}
