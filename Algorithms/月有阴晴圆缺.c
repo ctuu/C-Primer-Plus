@@ -2,12 +2,12 @@
 int main(void)
 {
     int co, day, i;
+    int count[92];
     for (scanf("%d", &co); co > 0; co--)
     {
         scanf("%d", &day);
         while (day < 1 || day > 92)
             scanf("%d", &day);
-        int count[day];
         for (i = 0; i < day; i++)
             scanf("%d", &count[i]);
         if (day == 1)
