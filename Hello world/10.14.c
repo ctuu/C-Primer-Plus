@@ -24,7 +24,7 @@ void show_array(const double ar[], int n)
     putchar('\n');
 }
 
-void mult_Array(double ar[], int n, double mult)
+void mult_array(double ar[], int n, double mult)
 {
     int i;
 
