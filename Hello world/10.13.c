@@ -10,7 +10,7 @@ int main(void)
     printf("pointer value, dereferenced pointer, pointer address:\n");
     printf("ptr1 = %p, *ptr1 = %d, &ptr1 = %p\n", ptr1, *ptr1, &ptr1);
 
-    ptr3 = ptr1 +4;
+    ptr3 = ptr1 + 4;
     printf("\nadding an int to a pointer:\n");
     printf("ptr1 + 4 = %p, *(ptr1 + 4) = %d\n", ptr1 + 4, *(ptr1 + 4));
     ptr1++;
