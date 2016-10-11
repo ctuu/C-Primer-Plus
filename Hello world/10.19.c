@@ -13,7 +13,7 @@ int main(void)
 
     total1 = sum(pt1, 2);
     total2 = sum2d(pt2, 2);
-    total3 - sum((int[]) { 4, 4, 4, 5, 5, 5 }, 6);
+    total3 = sum((int[]) { 4, 4, 4, 5, 5, 5 }, 6);
     printf("total1 = %d\n", total1);
     printf("total2 = %d\n", total2);
     printf("total3 = %d\n", total3);
