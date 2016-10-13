@@ -8,7 +8,7 @@ int main(void)
     for (c = 0; c < 5; c++)
         printf("%.1lf ", num[c]);
     printf("\nAfter: ");
-    sort(num, num + 5);
+    sort(num, num + 4);
     for (c = 0; c < 5; c++)
         printf("%.1lf ", num[c]);
 
@@ -20,8 +20,6 @@ void sort(double *start, double *end)
     double temp;
     for (; start <= end; start++, end--)
     {
-        if (start == end)
-            break;
         temp = *start;
         *start = *end;
         *end = temp;
