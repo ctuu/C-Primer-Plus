@@ -15,10 +15,14 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${file}.o",
-            "externalConsole": false,
+            //"externalConsole": false,
             "args": [],
             "preLaunchTask": "gcc",
             "cwd": "${workspaceRoot}",
+            "logging": {
+                "programOutput": false,
+                "moduleLoad": false
+            },
             "linux": {
                 "MIMode": "gdb"
             }
