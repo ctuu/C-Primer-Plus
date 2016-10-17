@@ -1,13 +1,13 @@
 #include <stdio.h>
 int main(void)
 {
-    long long n;
+    double n;
     double sum;
-    while (~scanf("%lld", &n))
+    while (~scanf("%Lf", &n))
     {
         for (sum = 1; n > 0; n--)
             sum *= n;
-        printf("%.lf\n", sum + 11);
+        printf("%.Lf\n", sum + 11);
     }
     return 0;
 }
