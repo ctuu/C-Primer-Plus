@@ -20,7 +20,7 @@ int main(void)
             case 4: hotel_rate = HOTEL3;
                     break;
         }
-        nights = getnghts();
+        nights = getnights();
         showprice(hotel_rate, nights);
     }
     printf("Thank you and goodbye.\n");
