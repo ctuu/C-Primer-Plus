@@ -8,14 +8,17 @@
             "target": "${file}.o",
             "cwd": "${workspaceRoot}",
             "terminal": "",
-            "preLaunchTask": "gcc"
+            "preLaunchTask": "gcc",
+            "windows": {
+              "miDebuggerPath": "c:\\MinGW\\bin\\gdb.exe"  
+            }
         },
         {
             "name": "C Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${file}.o",
-            //"externalConsole": false,
+            "externalConsole": true,
             "args": [],
             "preLaunchTask": "gcc",
             "cwd": "${workspaceRoot}",
@@ -25,6 +28,9 @@
             },
             "linux": {
                 "MIMode": "gdb"
+            },
+            "windows": {
+              "miDebuggerPath": "c:\\MinGW\\bin\\gdb.exe"  
             }
         },
         {
