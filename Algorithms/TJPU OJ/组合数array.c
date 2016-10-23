@@ -4,7 +4,7 @@ int main(void)
     int x, y, n, m;
     while (~scanf("%d%d", &x, &y))
     {
-        long long num[31][31] = {0};
+        long long num[32][32] = {0};
         num[1][0] = 1;
         for (m = 1; m <= y; m++)
             for (n = 1; n <= y + 1; n++)
