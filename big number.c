@@ -18,4 +18,13 @@ int main(void)
             }
             else
                 printf("%d ", num[a][b] - 48);
+    
+        for (a = 0; a < NUM; a++)
+    {
+        for (c = 1000, b = n[a]; b <= 1000; b++, c--)
+        {
+            num[a][c] = num[a][b] - 48;
+            num[a][b] = 0;
+        }
+    }
 }
