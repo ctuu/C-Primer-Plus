@@ -6,7 +6,7 @@ int main(void)
     int a, b, c, count, t, s;
     int n[NUM];
     scanf("%d", &count);
-    while (getchar() != '\n')
+    while (getchar() == '\n')
         continue;
     for (t = 1; t <= count; t++)
     {
@@ -16,7 +16,11 @@ int main(void)
 
         for (a = 0; a < NUM; a++)
             for (b = 1; (num[a][b] = getchar()) != '\n' && b < MAX; b++)
+            {
+                while (getchar() == ' ')
+                    continue;
                 n[a] = b;
+            }
 
         for (a = 0; a < NUM; a++)
             for (c = MAX - 1, b = n[a] + 1; b > 0; b--, c--)
@@ -43,21 +47,8 @@ int main(void)
 
         for (a = 0; a < NUM; a++)
         {
-            for (c = 0, b = 0; b < MAX; b++)
-            {
-                if (num[a][b] == 0 && c == 0)
-                {
-                    if (b == MAX - 1 && c == 0)
-                        for (s = 0; s < n[a]; s++)
-                            printf("%d", num[a][b]);
-                    continue;
-                }
-                else
-                {
-                    c = 1;
-                    printf("%d", num[a][b]);
-                }
-            }
+            for (b = MAX - n[a]; b < MAX; b++)
+                printf("%d", num[a][b]);
             if (a < NUM - 1)
                 printf(" + ");
         }
