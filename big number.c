@@ -71,6 +71,8 @@ int main(void)
 
         if (t != count)
             printf("\n\n");
+        else
+            printf("\n");
     }
     return 0;
 }
