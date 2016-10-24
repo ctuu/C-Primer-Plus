@@ -3,7 +3,7 @@
 #define MAX 1002
 int main(void)
 {
-    int a, b, c, count, t;
+    int a, b, c, count, t, s;
     int n[NUM];
     scanf("%d", &count);
     while (getchar() != '\n')
@@ -40,13 +40,18 @@ int main(void)
                 num[NUM][b] -= 10;
                 num[NUM][b - 1] += 1;
             }
-        
+
         for (a = 0; a < NUM; a++)
         {
             for (c = 0, b = 0; b < MAX; b++)
             {
                 if (num[a][b] == 0 && c == 0)
+                {
+                    if (b == MAX - 1 && c == 0)
+                        for (s = 0; s < n[a]; s++)
+                            printf("%d", num[a][b]);
                     continue;
+                }
                 else
                 {
                     c = 1;
@@ -61,7 +66,11 @@ int main(void)
         for (c = 0, b = 0; b < MAX; b++)
         {
             if (num[NUM][b] == 0 && c == 0)
+            {
+                if (b == MAX - 1 && c == 0)
+                    printf("%d", num[NUM][b]);
                 continue;
+            }
             else
             {
                 c = 1;
