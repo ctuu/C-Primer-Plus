@@ -1,38 +1,29 @@
 #include <stdio.h>
+#include <string.h>
 #define NUM 2
-#define MAX 1002
+#define MAX 1001
+
 int main(void)
 {
-    int a, b, c, count, t, s;
+    int a, b, c, count, t;
     int n[NUM];
+    char num[NUM + 1][MAX] = {0};
+
     scanf("%d", &count);
-    while (getchar() == '\n')
-        continue;
     for (t = 1; t <= count; t++)
     {
+        char num[NUM + 1][MAX] = {0};
         printf("Case %d:\n", t);
-
-        int num[NUM + 1][MAX] = {0};
-
         for (a = 0; a < NUM; a++)
-            for (b = 1; (num[a][b] = getchar()) != '\n' && b < MAX; b++)
+        {
+            scanf("%s", num[a]);
+            n[a] = strlen(num[a]);
+            for (c = MAX - 1, b = n[a] - 1; b >= 0; b--, c--)
             {
-                while (getchar() == ' ')
-                    continue;
-                n[a] = b;
-            }
-
-        for (a = 0; a < NUM; a++)
-            for (c = MAX - 1, b = n[a] + 1; b > 0; b--, c--)
-            {
-                if (num[a][b] == 10)
-                {
-                    num[a][b] = 48;
-                    c = MAX;
-                }
                 num[a][c] = num[a][b] - 48;
-                num[a][b] = 0;
+                num[a][b] = '\0';
             }
+        }
 
         for (a = 0; a < NUM; a++)
             for (b = 1; b < MAX; b++)
@@ -54,6 +45,7 @@ int main(void)
         }
 
         printf(" = ");
+
         for (c = 0, b = 0; b < MAX; b++)
         {
             if (num[NUM][b] == 0 && c == 0)
@@ -68,7 +60,7 @@ int main(void)
                 printf("%d", num[NUM][b]);
             }
         }
-
+        
         if (t != count)
             printf("\n\n");
         else
