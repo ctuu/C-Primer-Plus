@@ -8,7 +8,7 @@ int main(void)
     int c;
     while (s_gets(word, 80) != NULL && s_gets(ch, 1) != NULL)
     {
-        printf("\n\n%c",search(word, ch));
+      //  printf("\n\n%c",search(word, ch));
         
     }
     return 0;
@@ -37,9 +37,11 @@ char search(char * word, char * ch)
 {
     for (; word != '\0'; word++)
     {
-        printf("%c", *word);
         if (*word == *ch)
-             return *word;
+             {
+            printf("%s", *word);
+                 return *word;
+             }
     }
     return 0;
 }
