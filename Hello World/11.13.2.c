@@ -7,6 +7,7 @@ int main(void)
     char ch[N] = {};
     input (ch, N - 1);
     puts(ch);
+    puts("Done");
     return 0;
 }
 
@@ -16,7 +17,7 @@ void input(char * ch, int n)
     for (a = 0; a < n; a++)
     {
         b = getchar();
-        if (b != EOF)
+        if (b != EOF && b != '\n' && b != ' ' && b != '\t')
             ch[a] = b;
         else
             break;
