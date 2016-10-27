@@ -1,47 +1,27 @@
 #include <stdio.h>
-char search(char *word, char *ch);
-char *s_gets(char *st, int n);
+char *search(char *word, char ch);
 int main(void)
 {
     char word[80];
-    char ch[1];
+    char ch;
     int c;
-    while (s_gets(word, 80) != NULL && s_gets(ch, 1) != NULL)
+    while (fgets(word, 80, stdin) != NULL)
     {
-      //  printf("\n\n%c",search(word, ch));
-        
+	ch = getchar();
+	while (getchar() != '\n')
+	    continue;
+	printf("\n%p\n", search(word, ch));
     }
     return 0;
 }
 
-char *s_gets(char *st, int n)
+char *search(char *word, char ch)
 {
-    char *ret_val;
-    int i = 0;
-
-    ret_val = fgets(st, n, stdin);
-    if (ret_val)
+    while (*word != '\0')
     {
-        while (st[i] != '\n' && st[i] != '\0')
-            i++;
-        if (st[i] == '\n')
-            st[i] = '\0';
-        else
-            while (getchar() != '\n')
-                continue;
-    }
-    return ret_val;
-}
-
-char search(char * word, char * ch)
-{
-    for (; word != '\0'; word++)
-    {
-        if (*word == *ch)
-             {
-            printf("%s", *word);
-                 return *word;
-             }
+	if (*word == ch)
+	    return word;
+	word++;
     }
     return 0;
 }
