@@ -7,10 +7,10 @@ int main(void)
     int c;
     while (fgets(word, 80, stdin) != NULL)
     {
-	ch = getchar();
-	while (getchar() != '\n')
-	    continue;
-	printf("\n%p\n", search(word, ch));
+        ch = getchar();
+        while (getchar() != '\n')
+            continue;
+        printf("\n%p\n", search(word, ch));
     }
     return 0;
 }
@@ -19,9 +19,9 @@ char *search(char *word, char ch)
 {
     while (*word != '\0')
     {
-	if (*word == ch)
-	    return word;
-	word++;
+        if (*word == ch)
+            return word;
+        word++;
     }
     return 0;
 }

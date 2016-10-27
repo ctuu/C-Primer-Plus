@@ -1,6 +1,8 @@
 #include <stdio.h>
 int main(void)
 {
-    printf("Hello World!");
+    char a[20];
+    fgets(a, 20, stdin);
+    printf("%s\nHello World!", a);
     return 0;
 }
