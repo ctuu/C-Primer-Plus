@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define MAX 80
 #define LIM 5
-void mystrncpy(char *s1, char *s2, int n);
+char *mystrncpy(char *s1, char *s2, int n);
 int main(void)
 {
     char s1[MAX];
@@ -15,18 +15,19 @@ int main(void)
     return 0;
 }
 
-void mystrncpy(char *s1, char *s2, int n)
+char *mystrncpy(char *s1, char *s2, int n)
 {
     while (*s1 != '\n')
         s1++;
     while (n > 0)
     {
+        if (*s2 == '\n')
+            *s2 = '\0';
         *s1 = *s2;
         s1++;
         s2++;
         n--;
     }
     s1 = '\0';
+    return s1;
 }
-
-
