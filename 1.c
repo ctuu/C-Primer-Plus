@@ -1,5 +1,5 @@
 #include <stdio.h>
-int aqq(int a, int b);
+int aq(int a, int b);
 
 int main(void)
 {
@@ -7,7 +7,7 @@ int main(void)
     s = a = b = 0;
     s += aqq(a - 1, b - 1);
 }
-int aqq(int a, int b)
+int aq(int a, int b)
 {
     return 1;
 }
