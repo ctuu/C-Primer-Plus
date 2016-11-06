@@ -1,12 +1,30 @@
 #include <stdio.h>
+short queen[4][4] =
+    {
+        {0, 1, 0, 0},
+        {0, 0, 0, 1},
+        {1, 0, 0, 0},
+        {0, 0, 1, 0}};
+void find(int x, int y);
 int main(void)
 {
-    const int **pp2;
-    int *p1;
-    const int n = 13;
-    pp2 = &p1;
-    *pp2 = &n;
-    *p1 = 10;
-    printf("%d", n);
+    find(0, 0);
     return 0;
+}
+
+void find(int x, int y)
+{
+    if (x < 4)
+    {
+        if (y < 4)
+        {
+            printf("%hd", queen[x][y]);
+            find(x, y + 1);
+        }
+        else
+        {
+            printf("\n");
+        find(x + 1, 0);
+        }
+    }
 }
