@@ -1,31 +1,31 @@
 #include <stdio.h>
 
-int sum(int a[], int n);
-int num[20];
-
+void sfp(int n, int k, int *num, int co);
 int main(void)
 {
-    int n, k;
-    int i;
-    while (~scanf("%d%d", &n, &k))
+    int N, K, a;
+    int num[20];
+    while (~scanf("%d%d", &N, &K))
     {
-        for (i = 0; i < n; i++)
-            scanf("%d", &num[i]);
-        sum(num, k);
+        for (a = 0; a < N; a++)
+            scanf("%d", &num[a]);
+        sfp(N, K, num, 0);
     }
     return 0;
 }
 
-int sum(int a[], int n)
+void sfp(int n, int k, int *num, int co)
 {
-    int i, q;
-    if (n > 0)
+    int t;
+    if (k > 0)
     {
-        for (i = 0; i < n; i++)
+        for (t = n; t > 0; t--)
         {
-            q += a[i];
-            sum(a, n--);
+            n--;
+            num++;
+            sfp(n, k - 1, num, co + *num);
         }
     }
-    printf("%d", q);
+    else
+        printf("%d\n", co);
 }
