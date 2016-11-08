@@ -3,21 +3,22 @@ void pn(int a);
 int main(void)
 {
     int n, i;
-    scanf("%d", &n);
-    for (i = 1; i <= n; i++)
-        pn(i);
+    while(~scanf("%d", &n))
+    {
+    pn(n);
+    printf("   %d\n",n);
+    }
     return 0;
 }
 
 void pn(int a)
 {
     int n;
-    if (a == 1 || a == 2 || a == 3 || a == 5 || a == 7)
+        for (n = 2; n * n < a; n++)
+            if (a % n == 0)
+                {
+                    printf("NO, %d", n);
+                    return;
+                }
         printf("%d\n", a);
-    else if (a % 2 == 0 || a % 3 == 0 || a % 5 == 0 || a % 7 == 0)
-        return;
-    for (n = 1; n * n < a; n++)
-        if (a % n == 0)
-            break;
-    printf("%d\n", a);
 }
