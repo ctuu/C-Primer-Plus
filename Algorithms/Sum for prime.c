@@ -5,14 +5,12 @@ void sfp(int n, int k, int *num, int co);
 int main(void)
 {
     int N, K, a;
-    int num[20];
+    int num[21];
     while (~scanf("%d%d", &N, &K))
     {
         che = 0;
         for (a = 0; a < N; a++)
-        {
             scanf("%d", &num[a]);
-        }
         sfp(N, K, num, 0);
         printf("%d\n", che);
     }
@@ -29,16 +27,15 @@ void sfp(int n, int k, int *num, int co)
             sfp(n, k - 1, num + 1, co + *num);
         }
     else
-    {
         pn(co);
-        //printf(" %d ", co);
-    }
 }
 
 void pn(int a)
 {
     int n;
-    if (a == 1 || a == 2 || a == 3 || a == 5 || a == 7)
+    if (a == 1)
+        return;
+    else if (a == 2 || a == 3 || a == 5 || a == 7)
         che++;
     else if (a % 2 == 0 || a % 3 == 0 || a % 5 == 0 || a % 7 == 0)
         return;
