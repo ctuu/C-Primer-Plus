@@ -1,11 +1,11 @@
 #include <stdio.h>
 int che;
 void pn(int a);
-void sfp(int n, int k, int *num, int co);
+void sfp(int n, int k, int *num, long long co);
 int main(void)
 {
     int N, K, a;
-    int num[21];
+    int num[20];
     while (~scanf("%d%d", &N, &K))
     {
         che = 0;
@@ -17,7 +17,7 @@ int main(void)
     return 0;
 }
 
-void sfp(int n, int k, int *num, int co)
+void sfp(int n, int k, int *num, long long co)
 {
     int t;
     if (k > 0)
