@@ -11,9 +11,9 @@ void set_mode(int mo)
     {
         printf("Invalid mode specified. ");
         if (mode == 1)
-            printf("Mode 1(US) used");
+            printf("Mode 1(US) used\n");
         else
-            printf("Mode 0(metric) used");
+            printf("Mode 0(metric) used\n");
     }
     mode = mo;
 }
@@ -34,5 +34,5 @@ void show_info(void)
     if (mode == 0)
         printf("Fuel consumption is %.2f liters per 100 km.\n", fuel / dis * 100);
     else
-        printf("Fuel consumption is %.2f miles per gallon.\n", dis / fuel);
+        printf("Fuel consumption is %.1f miles per gallon.\n", dis / fuel);
 }
