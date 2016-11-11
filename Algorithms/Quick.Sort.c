@@ -19,28 +19,13 @@ int main(void)
 
 void quicksort(int i, int j)
 {
-    //printf("=.=");
-    int a = i;
-    int b = j - 1;
-    int temp;
-    i++;
-
-    if (j > i)
+    int a, b, temp;
+    for ( i < j)
     {
-        for (; b > a + 1; a++, b--)
+        for (a = i, b = j - 1; b > a;)
         {
-            for (; num[a] < num[j];)
+            for (;num[a] < num[j] && a < b;)
                 a++;
-            for (; num[b] > num[j];)
-                b--;
-            temp = num[a];
-            num[a] = num[b];
-            num[b] = temp;
         }
-        temp = num[i];
-        num[i] = num[j];
-        num[j] = temp;
-        quicksort(i, a);
-        quicksort(b, j);
     }
 }
