@@ -1,36 +1,33 @@
 #include <stdio.h>
-#define NUM 9
-int num[NUM] = {3, 7, 5, 4, 2, 6, 8, 1, 2};
+#include <stdlib.h>
+#include <time.h>
+#define MAX 100
+int num[MAX];
 void quicksort(int i, int j);
-
 int main(void)
 {
-    int a = NUM;
-    int b;
-    for (b = 0; b < a; b++)
-        printf("%d ", num[b]);
-    printf("\n");
-    printf("=0=\n");
-    quicksort(0, NUM - 1);
-    for (b = 0; b < a; b++)
-        printf("%d ", num[b]);
+    int co;
+    srand((unsigned int) time(0));
+    for (co = 0; co <MAX; co++)
+        num[co] = rand() % 10 + 1;
+    quicksort(0, MAX - 1);
+    for (co = 0; co <MAX; co++)
+        printf("%d\n", num[co]);
     return 0;
 }
 
 void quicksort(int i, int j)
 {
-    //printf("=.=");
     int a = i;
     int b = j - 1;
     int temp;
-
-    if (j > i + 1)
+    if (a < b)
     {
-        for (; b > a + 1;)
+        for (; a < b;)
         {
-            for (; num[a] < num[j] && a < b - 1;)
+            while (num[a] <= num[j] && a < b)
                 a++;
-            for (; num[b] > num[j] && a < b - 1;)
+            while (num[b] > num[j] && a < b)
                 b--;
             if (num[a] >= num[j] && num[b] <= num[j])
             {
@@ -41,17 +38,20 @@ void quicksort(int i, int j)
         }
         if (num[a] > num[j])
         {
-        temp = num[a];
-        num[a] = num[j];
-        num[j] = temp;
+            temp = num[a];
+            num[a] = num[j];
+            num[j] = temp;
         }
         quicksort(i, a);
         quicksort(b, j);
     }
-    else if(num[i] > num [j])
+    else if (a == b)
     {
-        temp = num[i];
-        num[i] = num[j];
-        num[j] = temp;
+        if (num[i] > num[j])
+        {
+            temp = num[i];
+            num[i] = num[j];
+            num[j] = temp;
+        }
     }
 }
