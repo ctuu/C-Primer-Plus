@@ -31,9 +31,8 @@ int main(void)
         else
         {
             printf("YES\n");
-            for (te = 0; te < ln; te++)
-                for (tm = 0; tm < 6; tm++)
-                    printf("%c", seat[te][tm]);
+            for (te = 0; te < ln * 6; te++)
+                printf("%c", seat[0][te]);
         }
         oji = 0;
     }
