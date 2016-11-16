@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-char *make_array(int num);
-void show_word(char *word, int num);
+char **make_array(int num);
+void show_word(char **word, int num);
 int main(void)
 {
     int num;
-    char *ptd;
+    char **ptd;
     printf("How many words do you wish to enter? ");
     scanf("%d", &num);
     while (getchar() != '\n')
@@ -15,22 +15,23 @@ int main(void)
     return 0;
 }
 
-char *make_array(int num)
+char **make_array(int num)
 {
     int ct = 0;
     int co;
     int nub = 0;
-    int * pt;
+    char **pt;
     char ch[100];
-    pt = (int *)malloc(num * sizeof(char *));
+    printf("Enter %d words now:\n", num);
+    pt = (char **)malloc(num * sizeof(char *));
     while (nub < num)
     {
-        while ((ch[ct] = getchar()) != '\n')
+        while ((ch[ct] = getchar()) != '\n' && (ch[ct] = getchar()) != ' ')
             ct++;
         pt[nub] = (char *)malloc(ct * sizeof(char));
-        for (co = 0; co < ct; co++)
+        for (co = 0; co <= ct; co++)
         {   
-            *(*pt) = ch[co];
+             pt[nub][co]= ch[co];
             ch[co] = '\0';
         } 
         ct = 0;
@@ -39,11 +40,13 @@ char *make_array(int num)
     return pt;
 }
 
-void show_word(char *word, int num)
+void show_word(char **word, int num)
 {
     int ct;
+    printf("Here are your words:\n");
     for (ct = 0; ct < num; ct++)
-    {
         puts(word[ct]);
-    }
+    for (ct = 0; ct < num; ct++)
+        free(word[ct]);
+    free(word);
 }
