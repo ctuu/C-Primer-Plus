@@ -10,19 +10,19 @@ int main(void)
     {
         printf("This is a(an) ");
         if (ls == lr && lr == lt)
-            printf("Equilateral ");
+            printf("equilateral ");
         else
         {
             if (ls == lr || ls == lt || lr == lt)
                 printf("isosceles ");
             if (ls * ls + lr * lr == lt * lt || ls * ls + lt * lt == lr * lr || lt * lt + lr * lr == ls * ls)
-                printf("right angle ");
+                printf("right angled ");
             else if (ls * ls + lr * lr > lt * lt || ls * ls + lt * lt > lr * lr || lt * lt + lr * lr > ls * ls)
-                printf("obtuse angle ");
+                printf("obtuse angled ");
             else
-                printf("acute angle ");
+                printf("acute angled ");
         }
-        printf("triangle.");
+        printf("triangle.\n");
     }
     return 0;
 }

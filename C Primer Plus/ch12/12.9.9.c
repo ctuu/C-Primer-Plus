@@ -22,19 +22,25 @@ char **make_array(int num)
     int nub = 0;
     char **pt;
     char ch[100];
+    char temp;
     printf("Enter %d words now:\n", num);
     pt = (char **)malloc(num * sizeof(char *));
     while (nub < num)
     {
-        while ((ch[ct] = getchar()) != '\n' && (ch[ct] = getchar()) != ' ')
-            ct++;
+        for (ct = 0;;ct++)
+            {
+                temp = getchar();
+                if (temp == '\n' || temp == ' ')
+                    break;
+                else
+            }
+            printf("%d",ct);
         pt[nub] = (char *)malloc(ct * sizeof(char));
-        for (co = 0; co <= ct; co++)
+        for (co = 0; co < ct; co++)
         {   
              pt[nub][co]= ch[co];
             ch[co] = '\0';
         } 
-        ct = 0;
         nub++; 
     }
     return pt;
