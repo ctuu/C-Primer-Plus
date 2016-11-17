@@ -2,12 +2,11 @@
 #include <stdlib.h>
 int main(void)
 {
-    char *ch;
-    ch = (char *)malloc(3 * sizeof(char));
-    ch[0] = 'q';
-    ch[1] = 'w';
-    ch[2] = 'e';
-    printf("%s", ch);
-    free(ch);
+    char ch;
+    ch = getchar();
+    if (ch == '-')
+        printf("!!");
+    else
+        printf("@@");
     return 0;
 }
