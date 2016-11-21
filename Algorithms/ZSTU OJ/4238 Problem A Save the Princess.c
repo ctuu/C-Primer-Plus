@@ -5,15 +5,14 @@ int main(void)
     for (scanf("%d", &T); T > 0; T--)
     {
         scanf("%d%d", &n, &k);
-        if (n == 3)
+        if (k == 1 || k == n)
+            printf("BH\n");
+        else if (n == 3)
+            printf("BH\n");
+        else if ((n - 3) % 2 == 0)
             printf("BH\n");
         else
-        {
-            if ((n - 3) % 2 == 0)
-                printf("BH\n");
-            else
-                printf("LYF\n");
-        }
+            printf("LYF\n");
     }
     return 0;
 }
