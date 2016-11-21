@@ -40,6 +40,7 @@ int main(void)
                     sum += 1;
                     gr = 0;
                 }
+                isM = 0;
                 sum += 1;
                 gr += 1;
             }
