@@ -2,20 +2,14 @@
 int main(void)
 {
     int T, n, k;
-    scanf("%d", &T);
-    for (; T > 0; T--)
+    for (scanf("%d", &T); T > 0; T--)
     {
         scanf("%d%d", &n, &k);
-        if (n % 2 == 0)
-        {
-            if ((n / 2) >= k)
-                printf("BH\n");
-            else
-                printf("LYF\n");
-        }
+        if (n == 3)
+            printf("BH\n");
         else
         {
-            if ((n / 2) + 1 >= k)
+            if ((n - 3) % 2 == 0)
                 printf("BH\n");
             else
                 printf("LYF\n");
