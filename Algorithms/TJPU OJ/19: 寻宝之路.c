@@ -12,8 +12,7 @@ int check(void);
 
 int main(void)
 {
-    int x, y;
-    int xt, yt;
+    int x, y, xt, yt;
     while (~scanf("%d%d", &x, &y))
     {
         for (xt = 0; xt < x; xt++)
