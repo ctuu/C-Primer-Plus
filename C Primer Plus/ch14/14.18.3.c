@@ -13,7 +13,7 @@ struct book
     float value;
 };
 
-void list_of_ch(struct book *lib[MAXBKS], int ct);
+void list_of_ch(struct book lib[MAXBKS], int ct);
 void show(const struct book *library, int count);
 
 int main(void)
@@ -38,6 +38,7 @@ int main(void)
     if (count > 0)
     {
         show(library, count);
+        list_of_ch(library, count);
     }
     else
         printf("No books? Too bad.\n");
@@ -54,20 +55,21 @@ void show(const struct book *library, int count)
                library->author, library->value);
 }
 
-void list_of_ch(struct book *lib[MAXBKS], int ct)
+void list_of_ch(struct book lib[MAXBKS], int ct)
 {
-    struct book *temp;
+    struct book temp;
     int top, seek;
     for (top = 0; top < ct; top++)
         for (seek = top + 1; seek < ct; seek++)
         {
-            if (strcmp(lib[seek]->title, lib[top]->title) > 0)
+            if (strcmp(lib[seek].title, lib[top].title) < 0)
             {
                 temp = lib[top];
                 lib[top] = lib[seek];
                 lib[seek] = temp;
             }
         }
+                show(lib, ct);
 }
 
 char *s_gets(char *st, int n)
