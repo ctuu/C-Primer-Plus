@@ -14,7 +14,7 @@ struct book
 };
 
 void list_of_ch(struct book *lib[MAXBKS], int ct);
-void show(const struct book *library[], int count);
+void show(const struct book *library, int count);
 
 int main(void)
 {
@@ -45,13 +45,13 @@ int main(void)
     return 0;
 }
 
-void show(const struct book *library[], int count)
+void show(const struct book *library, int count)
 {
     int index;
     printf("Here is the list of your books:\n");
-    for (index = 0; index < count; index++)
-        printf("%s by %s: $%.2f\n", library[index]->title,
-               library[index]->author, library[index]->value);
+    for (index = 0; index < count; library++, index++)
+        printf("%s by %s: $%.2f\n", library->title,
+               library->author, library->value);
 }
 
 void list_of_ch(struct book *lib[MAXBKS], int ct)
