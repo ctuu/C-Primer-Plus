@@ -51,7 +51,7 @@ int c_to_i(char ch[], int n)
             num += 5 * temp;
             break;
         case '6':
-            for (temp = 1, k = 6; k < n - i; k++)
+            for (temp = 1, k = 1; k < n - i; k++)
                 temp *= 10;
             num += 6 * temp;
             break;
