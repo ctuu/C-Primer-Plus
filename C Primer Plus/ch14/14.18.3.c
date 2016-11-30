@@ -13,14 +13,14 @@ struct book
     float value;
 };
 
-void list_of_ch(struct book lib[MAXBKS], int ct);
+void list_of_ch(struct book *lib, int ct);
+void list_of_nu(struct book *lib, int ct);
 void show(const struct book *library, int count);
 
 int main(void)
 {
     struct book library[MAXBKS];
     int count = 0;
-    int index;
 
     printf("Please enter the book title.\n");
     printf("Press [enter] at the start of a line to stop.\n");
@@ -37,8 +37,10 @@ int main(void)
     }
     if (count > 0)
     {
+        printf("Here is the list of your books:\n");
         show(library, count);
         list_of_ch(library, count);
+        list_of_nu(library, count);
     }
     else
         printf("No books? Too bad.\n");
@@ -49,13 +51,12 @@ int main(void)
 void show(const struct book *library, int count)
 {
     int index;
-    printf("Here is the list of your books:\n");
     for (index = 0; index < count; library++, index++)
         printf("%s by %s: $%.2f\n", library->title,
                library->author, library->value);
 }
 
-void list_of_ch(struct book lib[MAXBKS], int ct)
+void list_of_ch(struct book *lib, int ct)
 {
     struct book temp;
     int top, seek;
@@ -69,7 +70,26 @@ void list_of_ch(struct book lib[MAXBKS], int ct)
                 lib[seek] = temp;
             }
         }
-                show(lib, ct);
+    printf("\nHere is the list of your books(A to Z):\n");
+    show(lib, ct);
+}
+
+void list_of_nu(struct book *lib, int ct)
+{
+    struct book temp;
+    int top, seek;
+    for (top = 0; top < ct; top++)
+        for (seek = top + 1; seek < ct; seek++)
+        {
+            if (lib[seek].value < lib[top].value)
+            {
+                temp = lib[top];
+                lib[top] = lib[seek];
+                lib[seek] = temp;
+            }
+        }
+    printf("\nHere is the list of your books(Cheap to Expensive):\n");
+    show(lib, ct);
 }
 
 char *s_gets(char *st, int n)
