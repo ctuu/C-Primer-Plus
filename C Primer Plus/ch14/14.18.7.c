@@ -15,10 +15,11 @@ struct book
 };
 void eatline(void);
 char menu(void);
+char upmenu(void);
 int add(FILE *pbooks, struct book library[], int count, int filecount, int size);
 void show(struct book library[], int count);
 int del(FILE *pbooks, struct book library[], int count, int filecount, int size);
-
+void rev(FILE *pbooks, struct book library[], int count, int filecount, int size);
 int main(void)
 {
     int count = 0;
@@ -55,7 +56,7 @@ int main(void)
             filecount = count;
             break;
         case 'r':
-
+            rev(pbooks, library, count, filecount, size);
             break;
         }
 
@@ -159,6 +160,59 @@ int del(FILE *pbooks, struct book library[], int count, int filecount, int size)
     fwrite(&library[0], size, count, pbooks);
     printf("Your Modify have changed.\n");
     return count - 1;
+}
+
+void rev(FILE *pbooks, struct book library[], int count, int filecount, int size)
+{
+    int choose;
+    char ans;
+    if (count == 0)
+    {
+        fputs("The book.dat file is empty.", stderr);
+        return;
+    }
+    else
+    {
+        show(library, count);
+        printf("please choose the number you want to update(0 to %d): ", count);
+        scanf("%d", &choose);
+        eatline();
+        while ((ans = upmenu()) != 'q')
+            switch (ans)
+            {
+            case 't':
+                puts("Please enter a new titles.");
+                s_gets(library[choose].title, MAXTITL);
+                break;
+            case 'a':
+                puts("Please enter a new author.");
+                s_gets(library[choose].author, MAXAUTL);
+
+                break;
+            case 'v':
+                puts("Please enter a value.");
+                scanf("%f", &library[choose].value);
+
+                break;
+            }
+        fwrite(&library[choose], size, 1, pbooks);
+    }
+}
+
+char upmenu(void)
+{
+    char ans;
+    printf("Please choose the type you want to update:\nt) title\na)author\nv) value\nq) quit");
+    ans = getchar();
+    ans = tolower(ans);
+    eatline();
+    while (strchr("tavq", ans) == NULL)
+    {
+        puts("Please enter a t, a, v or q:");
+        ans = tolower(getchar());
+        eatline();
+    }
+    return ans;
 }
 
 char *s_gets(char *st, int n)
