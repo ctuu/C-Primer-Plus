@@ -11,12 +11,14 @@ struct book
     char title[MAXTITL];
     char author[MAXAUTL];
     float value;
-    //int exist;
+    _Bool exist;
 };
 void eatline(void);
 char menu(void);
-void add(FILE *pbooks, struct book library[], int count, int filecount);
+int add(FILE *pbooks, struct book library[], int count, int filecount, int size);
 void show(struct book library[], int count);
+int del(FILE *pbooks, struct book library[], int count, int filecount, int size);
+
 int main(void)
 {
     int count = 0;
@@ -26,14 +28,14 @@ int main(void)
     FILE *pbooks;
     int size = sizeof(struct book);
 
-    if ((pbooks = fopen("book.dat", "a+b")) == NULL)
+    if ((pbooks = fopen("book.dat", "r+b")) == NULL)
     {
         fputs("Can't open book.dat file\n", stderr);
         exit(1);
     }
 
     rewind(pbooks);
-    while (count < MAXBKS && fread(&library[count], size, 1, pbooks) == 1)
+    while (count < MAXBKS && fread(&library[count], size, 1, pbooks) == 1 && library[count].exist == 1)
         count++;
     printf("You have %d books now.\n", count);
     filecount = count;
@@ -45,9 +47,12 @@ int main(void)
             show(library, count);
             break;
         case 'a':
-            add(pbooks, library, count, filecount);
+            count = add(pbooks, library, count, filecount, size);
+            filecount = count;
             break;
         case 'd':
+            count = del(pbooks, library, count, filecount, size);
+            filecount = count;
             break;
         case 'r':
 
@@ -80,11 +85,10 @@ char menu(void)
 void show(struct book library[], int count)
 {
     int index;
-    int size = sizeof(struct book);
     if (count > 0)
     {
-        puts("Here is the list of your books:");
-        for (index = 0; index < count ; index++)
+        puts("\nHere is the list of your books:");
+        for (index = 0; index < count && library[index].exist == 1; index++)
             printf("(%d) %s by %s: $%.2f\n", index, library[index].title,
                    library[index].author, library[index].value);
     }
@@ -92,14 +96,12 @@ void show(struct book library[], int count)
         puts("No books? Too bad.\n");
 }
 
-void add(FILE *pbooks, struct book library[], int count, int filecount)
+int add(FILE *pbooks, struct book library[], int count, int filecount, int size)
 {
-    int size = sizeof(struct book);
-    printf("%d\n", size);
     if (count == MAXBKS)
     {
         fputs("The book.dat file is full.", stderr);
-        exit(2);
+        return count;
     }
     else
     {
@@ -111,18 +113,52 @@ void add(FILE *pbooks, struct book library[], int count, int filecount)
             s_gets(library[count].author, MAXAUTL);
             puts("Now enter the value.");
             scanf("%f", &library[count].value);
-            while (getchar() != '\n')
-                continue;
-         //   library[count].exist = 1;
-            count++;
+            eatline();
+            library[count++].exist = 1;
             if (count < MAXBKS)
                 puts("Enter the next title.");
         }
-        fwrite(&library[filecount], size, count - filecount,
-               pbooks);
+
         printf("Your Modify have changed.\n");
-        show(library, count);
+        fwrite(&library[filecount], size, count - filecount, pbooks);
+        return count;
     }
+}
+
+int del(FILE *pbooks, struct book library[], int count, int filecount, int size)
+{
+    int choose;
+    if (count == 0)
+    {
+        fputs("The book.dat file is empty.", stderr);
+        return count;
+    }
+    else
+    {
+        show(library, count);
+        printf("please choose the number you want to delete(0 to %d): ", count);
+        scanf("%d", &choose);
+        eatline();
+        library[choose].title[0] = '\0';
+        library[choose].author[0] = '\0';
+        library[choose].value = 0;
+        library[choose].exist = 0;
+        if (choose < count)
+        {
+            for (; choose < count; choose++)
+            {
+                strcpy(library[choose].title, library[choose + 1].title);
+                strcpy(library[choose].author, library[choose + 1].author);
+                library[choose].value = library[choose + 1].value;
+                library[choose].exist = library[choose + 1].exist;
+            }
+            library[count].exist = 0;
+        }
+    }
+    rewind(pbooks);
+    fwrite(&library[0], size, count, pbooks);
+    printf("Your Modify have changed.\n");
+    return count - 1;
 }
 
 char *s_gets(char *st, int n)
