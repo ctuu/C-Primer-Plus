@@ -76,7 +76,7 @@ char menu(void)
     eatline();
     while (strchr("sadrq", ans) == NULL)
     {
-        puts("Please enter a s, a, d, r or q:");
+        puts("Please enter a s, a, d, r or q: ");
         ans = tolower(getchar());
         eatline();
     }
@@ -137,7 +137,7 @@ int del(FILE *pbooks, struct book library[], int count, int filecount, int size)
     else
     {
         show(library, count);
-        printf("please choose the number you want to delete(0 to %d): ", count);
+        printf("please choose the number you want to delete(0 to %d): ", count - 1);
         scanf("%d", &choose);
         eatline();
         library[choose].title[0] = '\0';
@@ -174,14 +174,14 @@ void rev(FILE *pbooks, struct book library[], int count, int filecount, int size
     else
     {
         show(library, count);
-        printf("please choose the number you want to update(0 to %d): ", count);
+        printf("please choose the number you want to update(0 to %d):\n", count - 1);
         scanf("%d", &choose);
         eatline();
         while ((ans = upmenu()) != 'q')
             switch (ans)
             {
             case 't':
-                puts("Please enter a new titles.");
+                puts("Please enter a new title.");
                 s_gets(library[choose].title, MAXTITL);
                 break;
             case 'a':
@@ -195,20 +195,22 @@ void rev(FILE *pbooks, struct book library[], int count, int filecount, int size
 
                 break;
             }
-        fwrite(&library[choose], size, 1, pbooks);
+        rewind(pbooks);
+        fwrite(&library[0], size, count, pbooks);
+        printf("Your Modify have changed.\n");
     }
 }
 
 char upmenu(void)
 {
     char ans;
-    printf("Please choose the type you want to update:\nt) title\na)author\nv) value\nq) quit");
+    printf("Please choose the type you want to update:\nt) title      a) author\nv) value      q) quit\n");
     ans = getchar();
     ans = tolower(ans);
     eatline();
     while (strchr("tavq", ans) == NULL)
     {
-        puts("Please enter a t, a, v or q:");
+        puts("Please enter a t, a, v or q: ");
         ans = tolower(getchar());
         eatline();
     }
