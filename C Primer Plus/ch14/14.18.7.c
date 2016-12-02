@@ -106,6 +106,7 @@ int add(FILE *pbooks, struct book library[], int count, int filecount, int size)
     }
     else
     {
+        printf("count = %d\n",count);
         puts("Please add new book titles.");
         puts("Please [enter] at the start of a line to stop.");
         while (count < MAXBKS && s_gets(library[count].title, MAXTITL) != NULL && library[count].title[0] != '\0')
@@ -115,13 +116,14 @@ int add(FILE *pbooks, struct book library[], int count, int filecount, int size)
             puts("Now enter the value.");
             scanf("%f", &library[count].value);
             eatline();
-            library[count++].exist = 1;
+            library[count].exist = 1;
+            count++;
             if (count < MAXBKS)
                 puts("Enter the next title.");
         }
-
         printf("Your Modify have changed.\n");
-        fwrite(&library[filecount], size, count - filecount, pbooks);
+        rewind(pbooks);
+        fwrite(&library[0], size, count, pbooks);
         return count;
     }
 }
@@ -137,7 +139,7 @@ int del(FILE *pbooks, struct book library[], int count, int filecount, int size)
     else
     {
         show(library, count);
-        printf("please choose the number you want to delete(0 to %d): ", count - 1);
+        printf("please choose the number you want to delete(0 to %d):\n", --count);
         scanf("%d", &choose);
         eatline();
         library[choose].title[0] = '\0';
@@ -157,9 +159,9 @@ int del(FILE *pbooks, struct book library[], int count, int filecount, int size)
         }
     }
     rewind(pbooks);
-    fwrite(&library[0], size, count, pbooks);
+    fwrite(&library[0], size, count + 1, pbooks);
     printf("Your Modify have changed.\n");
-    return count - 1;
+    return count;
 }
 
 void rev(FILE *pbooks, struct book library[], int count, int filecount, int size)
@@ -183,16 +185,17 @@ void rev(FILE *pbooks, struct book library[], int count, int filecount, int size
             case 't':
                 puts("Please enter a new title.");
                 s_gets(library[choose].title, MAXTITL);
+                eatline();
                 break;
             case 'a':
                 puts("Please enter a new author.");
                 s_gets(library[choose].author, MAXAUTL);
-
+                eatline();
                 break;
             case 'v':
                 puts("Please enter a value.");
                 scanf("%f", &library[choose].value);
-
+                eatline();
                 break;
             }
         rewind(pbooks);
