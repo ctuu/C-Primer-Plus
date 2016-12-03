@@ -7,6 +7,7 @@ typedef struct name {
 
 int main(void)
 {
-    as ol;
+
+    printf("%d", 11%3);
     return 0;
 }

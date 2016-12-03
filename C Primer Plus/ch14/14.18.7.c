@@ -20,6 +20,7 @@ int add(FILE *pbooks, struct book library[], int count, int filecount, int size)
 void show(struct book library[], int count);
 int del(FILE *pbooks, struct book library[], int count, int filecount, int size);
 void rev(FILE *pbooks, struct book library[], int count, int filecount, int size);
+
 int main(void)
 {
     int count = 0;
