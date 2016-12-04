@@ -2,7 +2,7 @@
 int main(void)
 {
     int x, y, n, m;
-    while (~scanf("%d%d", &x, &y))
+    while (~scanf("%d%d", &y, &x))
     {
         long long num[32][32] = {0};
         num[1][0] = 1;

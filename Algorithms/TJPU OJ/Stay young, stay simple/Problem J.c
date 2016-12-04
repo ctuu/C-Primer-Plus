@@ -1,24 +1,23 @@
 #include <stdio.h>
+
 int main(void)
 {
-    int n, k, i;
-    int num[500];
-    int max = 0;
+    int n, k, ct;
+    int a[500];
     int sum = 0;
     scanf("%d%d", &n, &k);
-    for (i = 0; i < n; i++)
-        scanf("%d", &num[i]);
-    for (i = 0; i < n - 1; i++)
+    for (ct = 0; ct < n; ct++)
+        scanf("%d", &a[ct]);
+    for (ct = 0; ct < n - 1; ct++)
     {
-        if (num[i] + num[i + 1] < k)
+        if (a[ct] + a[ct + 1] < k)
         {
-            sum = k - num[i];
-            num[i + 1] += sum;
-            max = (sum > max) ? sum : max;
+            sum += (k - a[ct] - a[ct + 1]);
+            a[ct + 1] = k - a[ct];
         }
     }
-    printf("%d\n", max);
-    for (i = 0; i < n; i++)
-        printf("%d", num[i]);
-    return 0;
+    printf("%d\n", sum);
+    for (ct = 0; ct < n; ct++)
+        printf("%d ", a[ct]);
+        return 0;
 }

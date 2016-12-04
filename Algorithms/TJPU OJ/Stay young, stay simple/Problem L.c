@@ -40,7 +40,7 @@ int main(void)
     for (; d > 0; q--, d--)
         su += num[q];
     su /= b;
-    printf("%lf", sum + su);
+    printf("%.8lf", sum + su);
     return 0;
 }
 

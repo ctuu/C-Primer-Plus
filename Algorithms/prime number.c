@@ -1,24 +1,24 @@
 #include <stdio.h>
-void pn(int a);
+void pn(long long a);
 int main(void)
 {
-    int n, i;
-    while(~scanf("%d", &n))
+    long long n, i;
+    for (i = 1; 1 < 10000; i++)
     {
-    pn(n);
-    printf("   %d\n",n);
+        pn(i);
     }
     return 0;
 }
 
-void pn(int a)
+void pn(long long a)
 {
-    int n;
-        for (n = 2; n * n < a; n++)
-            if (a % n == 0)
-                {
-                    printf("NO, %d", n);
-                    return;
-                }
-        printf("%d\n", a);
+    long long n;
+    if (a == 1)
+        return;
+    for (n = 2; n * n <= a; n++)
+    {
+        if (a % n == 0)
+            return;
+    }
+    printf("%lld,", a);
 }
