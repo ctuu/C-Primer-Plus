@@ -58,13 +58,12 @@ int mid(long long y)
             ct++;
             if ((double)(A / B) + (double)(B / A) <= (double)(c / y) + (double)(y / c))
             {
+                u = 1;
                 sum++;
                 d++;
                 dfs();
                 printf("%lld %lld\n", c, y);
-                u = 1;
             }
-            
         }
     }
     return u;
