@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-long long A, B, sum;
-void calc(long long c, long long d);
+long long A, B, sum, c, d;
 
 int main(void)
 {
@@ -12,27 +11,15 @@ int main(void)
         sum = 0;
         scanf("%lld%lld", &A, &B);
         printf("Case #%d\n", t + 1);
-        calc(A, A);
+        for (c = A; c <= B; c++)
+            for (d = A; d <= B; d++)
+                if ((double)(A / B) + (double)(B / A) <= (double)(c / d) + (double)(d / c))
+                    sum++;
+        printf("%lld\n", sum);
+        for (c = A; c <= B; c++)
+            for (d = A; d <= B; d++)
+                if ((double)(A / B) + (double)(B / A) <= (double)(c / d) + (double)(d / c))
+                    printf("%lld %lld\n", c, d);
     }
     return 0;
-}
-
-void calc(long long c, long long d)
-{
-    if (c > B && d > B)
-        printf("%lld\n", sum);
-    else if (c > B || d > B)
-        return;
-    else
-    {
-        // printf("c = %lld, d =  %lld\n", c, d);
-        if ((double)(A / B) + (double)(B / A) <= (double)(c / d) + (double)(d / c))
-            sum++;
-        if (d <= B)
-            calc(c, d + 1);
-        if (c <= B)
-            calc(c + 1, d);
-        if ((double)(A / B) + (double)(B / A) <= (double)(c / d) + (double)(d / c))
-            printf("%lld %lld\n", c, d);
-    }
 }
