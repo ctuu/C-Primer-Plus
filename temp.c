@@ -2,7 +2,6 @@
 
 int main(void)
 {
-    int d, c;
-    printf("%d", scanf("%d", &d));
+    char d[10];
     return 0;
 }
