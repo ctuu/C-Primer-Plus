@@ -1,8 +1,9 @@
 #include <stdio.h>
+long long ct;
 
 long long A, B, sum, d;
-void dfs(long long d);
-int mid(long long d);
+void dfs(void);
+int mid(long long y);
 _Bool jud = 0;
 int main(void)
 {
@@ -10,18 +11,23 @@ int main(void)
     scanf("%d", &T);
     for (t = 0; t < T; t++)
     {
+        ct = 0;
         jud = 0;
         sum = 0;
         scanf("%lld%lld", &A, &B);
         printf("Case #%d\n", t + 1);
-        dfs(A);
+        d = A;
+        if (A == B)
+            printf("%d\n%lld %lld\n", 1, A, B);
+        else
+            dfs();
+        printf("\nsum = %lld\n\n", ct);
     }
     return 0;
 }
 
-void dfs(long long d)
+void dfs(void)
 {
-    long long c;
     if (d > B)
     {
         if (jud == 0)
@@ -31,25 +37,35 @@ void dfs(long long d)
     }
     else
     {
+        ct++;
         if (mid(d) == 0)
-            dfs(d + 1);
+        {
+            d++;
+            dfs();
+        }
     }
 }
 
-int mid(long long d)
+int mid(long long y)
 {
-    int u = 0;
     long long c;
+
+    int u = 0;
     if (jud == 0)
     {
         for (c = A; c <= B; c++)
-            if ((double)(A / B) + (double)(B / A) <= (double)(c / d) + (double)(d / c))
+        {
+            ct++;
+            if ((double)(A / B) + (double)(B / A) <= (double)(c / y) + (double)(y / c))
             {
                 sum++;
-                dfs(d + 1);
-                printf("%lld %lld\n", c, d);
+                d++;
+                dfs();
+                printf("%lld %lld\n", c, y);
                 u = 1;
             }
+            
+        }
     }
     return u;
 }
