@@ -1,19 +1,23 @@
 #include <stdio.h>
-#include <string.h>
+
 int main(void)
 {
-    int su, max;
-    int T, t, ct, cts, str;
-    int tag;
-    char ch[100000];
+    int max, T, t, k;
+    _Bool nu[26] = {0};
+    char ch;
     scanf("%d", &T);
-    for (t = 0; t < T; t++)
+    while (getchar() != '\n')
+        continue;
+    for (t = 0; t < T;)
     {
-        scanf("%s", ch);
-        str = strlen(ch);
-        printf("Case #%d: ", t + 1);
-            max = (max > su) ? max : su;
-        }
+        max = 0;
+        _Bool nu[26] = {0};
+        while ((ch = getchar()) != '\n')
+            nu[ch - 97] = 1;
+        printf("Case #%d: ", ++t);
+        for (k = 0; k < 26;)
+            if (nu[k++] == 1)
+                max++;
         printf("%d\n", max);
     }
     return 0;
