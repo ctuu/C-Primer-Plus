@@ -2,57 +2,44 @@
 
 int main(void)
 {
-    int T, n, m;
-    unsigned long long a[100000];
-    unsigned long long b, k, rema, c;
-    unsigned long long te, tu;
-    for (scanf("%d", &T); T > 0; T--)
+    int T, b, n, m, i;
+    int a[100000];
+    scanf("%d", &T);
+    while (T--)
     {
         scanf("%d", &n);
-        for (te = 0; te < n; te++)
-            scanf("%lld", &a[te]);
-        scanf("%d", &m);
-        for (te = 0; te < m; te++)
+        scanf("%d", &a[0]);
+        for (i = 1, b = 1; b < n; b++, i++)
         {
-            scanf("%lld", &b);
-            for (tu = 0; tu < n; tu++)
+            scanf("%d", &a[i]);
+            if (a[i] > a[i - 1])
+                i--;
+        }
+        n = i;
+        scanf("%d", &m);
+        while (m--)
+        {
+            scanf("%d", &b);
+            i = n;
+            while (b >= a[n - 1])
             {
-                if (b == a[tu])
+                i /= 2;
+                if (b > a[i])
                 {
-                    b = 0;
-                    break;
+                    while (i > -1 && b > a[i])
+                        i--;
+                    i++;
                 }
-                if (b < a[tu])
-                    continue;
-                if (!(a[tu] & a[tu] - 1))
+                else if (b < a[i])
                 {
-                    b &= (a[tu] - 1);
-                    continue;
+                    while (i < n  && b < a[i])
+                        i++;
+                    if (i == n)
+                    i--;
                 }
-                rema = 2;
-                while (b > a[tu])
-                {
-                    for (k = 0, c = a[tu]; b >= c; c <<= 1)
-                    {
-                        if (b - c < a[tu])
-                        {
-                            rema = b - c;
-                            k = 1;
-                            break;
-                        }
-                    }
-                    if (b - c < a[tu] && k == 1)
-                        break;
-                    b -= c >> 1;
-                }
-                if (b == a[tu])
-                    rema = 0;
-                else if (b < a[tu])
-                    rema = b;
-                b = rema;
+                b %= a[i];
             }
-
-            printf("%lld\n", b);
+            printf("%d\n", b);
         }
     }
     return 0;
