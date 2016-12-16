@@ -50,8 +50,9 @@ int main(void)
     current = head;
     while (current != NULL)
     {
+        head = current
         free(current);
-        current = current->next;
+        current = head->next;
     }
     printf("Bye!\n");
 
