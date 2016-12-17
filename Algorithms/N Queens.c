@@ -1,7 +1,7 @@
 #include <stdio.h>
-#define NUM 10
+#define NUM 4
 
-char queen[NUM][NUM] = {0};
+int queen[NUM][NUM] = {0};
 _Bool pin[3][2 * NUM];
 int co = 0;
 
