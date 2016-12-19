@@ -52,7 +52,7 @@ bool AddItem(Item item, List * plist)
     pnew = (Node *) malloc(sizeof(Node));
     if (pnew == NULL)
         return false;
-    
+
     CopyToNode(item, pnew);
     pnew->next = NULL;
     if (scan == NULL)
