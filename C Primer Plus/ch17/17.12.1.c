@@ -50,7 +50,7 @@ int main(void)
     current = head;
     while (current != NULL)
     {
-        head = current
+        head = current;
         free(current);
         current = head->next;
     }

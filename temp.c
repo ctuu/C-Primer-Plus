@@ -1,7 +1,8 @@
 #include <stdio.h>
 int main(void)
 {
-    int d = 14;
-    printf("%o %x", d, d);
+    int ct = 0;
+    //while (ct++ < 25)
+        printf("%d \n", 25>>2);
     return 0;
 }

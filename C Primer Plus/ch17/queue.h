@@ -2,7 +2,12 @@
 #define _QUEUE_H_
 #include <stdbool.h>
 
-typedef int Item;
+/*typedef int Item;*/
+typedef struct item
+{
+    long arrive;     // the time when a customer joins the queue
+    int processtime; // the number of consultation minutes desired
+} Item;
 
 #define MAXQUEUE 10
 
@@ -14,23 +19,23 @@ typedef struct node
 
 typedef struct queue
 {
-    Node * front;
-    Node * rear;
+    Node *front;
+    Node *rear;
     int items;
 } Queue;
 
-void InitializeQueue(Queue * pq);
+void InitializeQueue(Queue *pq);
 
-bool QueueIsFull(const Queue * pq);
+bool QueueIsFull(const Queue *pq);
 
-bool QueueIsEmpty(const Queue * pq);
+bool QueueIsEmpty(const Queue *pq);
 
-int QueueItemCount(const Queue * pq);
+int QueueItemCount(const Queue *pq);
 
-bool EnQueue(Item item, Queue * pq);
+bool EnQueue(Item item, Queue *pq);
 
-bool DeQueue(Item *pitem, Queue * pq);
+bool DeQueue(Item *pitem, Queue *pq);
 
-void EmptyTheQueue(Queue * pq);
+void EmptyTheQueue(Queue *pq);
 
 #endif
