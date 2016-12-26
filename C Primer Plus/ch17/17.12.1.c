@@ -10,7 +10,7 @@ struct film
     struct film *next;
 };
 char *s_gets(char *st, int n);
-
+void read(struct film *current);
 int main(void)
 {
     struct film *head = NULL;
@@ -46,6 +46,11 @@ int main(void)
                current->title, current->rating);
         current = current->next;
     }
+    if (head != NULL)
+    {
+        printf("\nHere is the movie list (inverted):\n");
+        read(head);
+    }
 
     current = head;
     while (current != NULL)
@@ -57,6 +62,16 @@ int main(void)
     printf("Bye!\n");
 
     return 0;
+}
+
+void read(struct film *current)
+{
+    if (current != NULL)
+    {
+        read(current->next);
+        printf("Movie: %s  Rating: %d\n",
+               current->title, current->rating);
+    }
 }
 
 char *s_gets(char *st, int n)

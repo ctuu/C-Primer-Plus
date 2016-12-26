@@ -17,7 +17,12 @@ typedef struct node
     struct node *next;
 } Node;
 
-typedef Node *List;
+
+typedef struct list
+{
+    Node *head;
+    Node *end;
+} List;
 
 void InitializeList(List *plist);
 bool ListIsEmpty(const List *plist);
