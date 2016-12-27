@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "17.12.2.h"
-static void CopyToNode(Item item, Node * pnode);
+static void CopyToNode(Item item, Node *pnode);
 
-void InitializeList(List * plist)
+void InitializeList(List *plist)
 {
     plist->head = NULL;
     plist->end = NULL;
 }
 
-bool ListIsEmpty(const List * plist)
+bool ListIsEmpty(const List *plist)
 {
-    if (plist->head == NULL && plist->end == NULL)
+    if (plist->head == NULL)
         return true;
     else
         return false;
 }
 
-bool ListIsFull(const List * plist)
+bool ListIsFull(const List *plist)
 {
-    Node * pt;
+    Node *pt;
     bool full;
     pt = (Node *)malloc(sizeof(Node));
     if (pt == NULL)
@@ -27,14 +27,14 @@ bool ListIsFull(const List * plist)
     else
         full = false;
     free(pt);
-    
+
     return full;
 }
 
-unsigned int ListItemCount(const List * plist)
+unsigned int ListItemCount(const List *plist)
 {
     unsigned int count = 0;
-    Node * pnode = plist->head;
+    Node *pnode = plist->head;
 
     while (pnode != NULL)
     {
@@ -45,32 +45,36 @@ unsigned int ListItemCount(const List * plist)
     return count;
 }
 
-bool AddItem(Item item, List * plist)
+bool AddItem(Item item, List *plist)
 {
-    Node * pnew;
-    Node * scan = plist->end;
+    Node *pnew;
+    Node *scan = plist->head;
 
-    pnew = (Node *) malloc(sizeof(Node));
+    pnew = (Node *)malloc(sizeof(Node));
     if (pnew == NULL)
         return false;
 
     CopyToNode(item, pnew);
     pnew->next = NULL;
     if (scan == NULL)
+    {
+        plist->head = pnew;
         plist->end = pnew;
+    }
     else
     {
         while (scan->next != NULL)
             scan = scan->next;
         scan->next = pnew;
+        plist->end = pnew;
     }
 
     return true;
 }
 
-void Traverse(const List * plist, void(*pfun)(Item item))
+void Traverse(const List *plist, void (*pfun)(Item item))
 {
-    Node * pnode = plist->head;
+    Node *pnode = plist->head;
 
     while (pnode != NULL)
     {
@@ -79,19 +83,19 @@ void Traverse(const List * plist, void(*pfun)(Item item))
     }
 }
 
-void EmptyTheList(List * plist)
+void EmptyTheList(List *plist)
 {
-    Node * psave;
+    Node *psave;
 
-    while (plist->end != NULL)
+    while (plist->head != NULL)
     {
-        psave = (plist->end)->next;
-        free(plist->end);
-        plist->end = psave;
+        psave = (plist->head)->next;
+        free(plist->head);
+        plist->head = psave;
     }
 }
 
-static void CopyToNode(Item item, Node * pnode)
+static void CopyToNode(Item item, Node *pnode)
 {
     pnode->item = item;
 }
