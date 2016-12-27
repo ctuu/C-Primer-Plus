@@ -14,4 +14,5 @@ int main(void)
 int sear(int num[], int temp)
 {
     int loc = MAX / 2;
+    
 }
