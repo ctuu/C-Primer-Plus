@@ -13,6 +13,18 @@ int main(void)
 
 int sear(int num[], int temp)
 {
-    int loc = MAX / 2;
-    
+    int beg = 0;
+    int end = MAX;
+    int loc;
+    while ((end - beg) != 1)
+    {
+        loc = (beg + end) >> 1;
+        if (num[loc] == temp)
+            return 1;
+        if (num[loc] > temp)
+            end = loc;
+        else if (num[loc] < temp)
+            beg = loc;
+    }
+    return 0;
 }
