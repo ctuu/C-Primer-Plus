@@ -5,15 +5,16 @@
 #define SLEN 20
 typedef struct item
 {
-    char ch;
-    int ct;
+    char petname[SLEN];
+    char petkind[SLEN];
 } Item;
 
-#define MAXITEMS 1000
+#define MAXITEMS 10
 
 typedef struct trnode
 {
-    Item item;
+    Item item[MAXITEMS];
+    int ct;
     struct trnode * left;
     struct trnode * right;
 } Trnode;
@@ -34,7 +35,7 @@ int TreeItemCount(const Tree * ptree);
 
 bool AddItem(const Item * pi, Tree * ptree);
 
-Trnode *  InTree(const Item * pi, const Tree * ptree);
+bool InTree(const Item * pi, const Tree * ptree);
 
 bool DeleteItem(const Item * pi, Tree * ptree);
 
