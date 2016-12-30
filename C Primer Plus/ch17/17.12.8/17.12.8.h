@@ -6,6 +6,20 @@
 #define TSIZE 45
 #define MAXITEMS 10
 
+typedef struct item
+{
+    char petname[SLEN];
+    char petkind[SLEN];
+} Item;
+
+typedef struct node
+{
+    char petkind[SLEN];
+    struct node *next;
+} Node;
+
+typedef Node *List;
+
 typedef struct trnode
 {
     char petname[SLEN];
@@ -21,21 +35,6 @@ typedef struct tree
     int size;
 } Tree;
 
-struct kind
-{
-    char petkind[SLEN];
-};
-
-typedef struct kind Item;
-
-typedef struct node
-{
-    Item item;
-    struct node *next;
-} Node;
-
-typedef Node *List;
-
 void InitializeTree(Tree *ptree);
 bool TreeIsEmpty(const Tree *ptree);
 bool TreeIsFull(const Tree *ptree);
@@ -45,6 +44,8 @@ bool InTree(const Item *pi, const Tree *ptree);
 bool DeleteItem(const Item *pi, Tree *ptree);
 void TreeTraverse(const Tree *ptree, void (*pfun)(Item item));
 void DeleteAll(Tree *ptree);
+
+//======================================================
 
 void InitializeList(List *plist);
 bool ListIsEmpty(const List *plist);

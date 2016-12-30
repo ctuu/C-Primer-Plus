@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "17.12.8.h"
 
-static void CopyToNode(Item item, Node * pnode);
+static void CopyToNode(Item item, Node *pnode);
 
 typedef struct pair
 {
@@ -50,31 +50,34 @@ int TreeItemCount(const Tree *ptree)
 bool TreeAddItem(const Item *pi, Tree *ptree)
 {
     Trnode *new_node;
-
+    Trnode *exist_node;
     if (TreeIsFull(ptree))
     {
         fprintf(stderr, "Tree is full\n");
         return false;
     }
-    if (SeekItem(pi, ptree).child != NULL)
+
+    if ((exist_node = SeekItem(pi, ptree).child) != NULL)
     {
-        fprintf(stderr, "Attempted to add duplicate item\n");
-        return false;
+        //name exist & add node to linklist
+        ListAddItem(pi, exist_node->list);
     }
-    new_node = MakeNode(pi);
-    if (new_node == NULL)
+    else
     {
-        fprintf(stderr, "Attempted to add duplicate item\n");
-        return false;
+        new_node = MakeNode(pi);
+        if (new_node == NULL)
+        {
+            fprintf(stderr, "Attempted to add duplicate item\n");
+            return false;
+        }
+
+        if (ptree->root == NULL)
+            ptree->root = new_node;
+        else
+            AddNode(new_node, ptree->root);
     }
 
     ptree->size++;
-
-    if (ptree->root == NULL)
-        ptree->root = new_node;
-    else
-        AddNode(new_node, ptree->root);
-
     return true;
 }
 
@@ -164,10 +167,7 @@ static void AddNode(Trnode *new_node, Trnode *root)
 
 static bool ToLeft(const Item *i1, const Item *i2)
 {
-    int comp1;
-    if ((comp1 = strcmp(i1->petname, i2->petname)) < 0)
-        return true;
-    else if (comp1 == 0 && strcmp(i1->petkind, i2->petkind) < 0)
+    if (strcmp(i1->petname, i2->petname) < 0)
         return true;
     else
         return false;
@@ -175,12 +175,7 @@ static bool ToLeft(const Item *i1, const Item *i2)
 
 static bool ToRight(const Item *i1, const Item *i2)
 {
-    int comp1;
-
-    if ((comp1 = strcmp(i1->petname, i2->petname)) > 0)
-        return true;
-    else if (comp1 == 0 &&
-             strcmp(i1->petkind, i2->petkind) > 0)
+    if (strcmp(i1->petname, i2->petname) > 0)
         return true;
     else
         return false;
@@ -191,9 +186,14 @@ static Trnode *MakeNode(const Item *pi)
     Trnode *new_node;
 
     new_node = (Trnode *)malloc(sizeof(Trnode));
+    List pet;
+    InitializeList(&pet);
+    //CREATE A LINKLIST
     if (new_node != NULL)
     {
-        new_node->item = *pi;
+        new_node->petname = *pi->petname;
+        new_node->list = pet;
+        new_node->ct = 0;
         new_node->left = NULL;
         new_node->right = NULL;
     }
@@ -258,13 +258,12 @@ static void DeleteNode(Trnode **ptr)
 
 //========================================
 
-
-void InitializeList(List * plist)
+void InitializeList(List *plist)
 {
     *plist = NULL;
 }
 
-bool ListIsEmpty(const List * plist)
+bool ListIsEmpty(const List *plist)
 {
     if (*plist == NULL)
         return true;
@@ -272,9 +271,9 @@ bool ListIsEmpty(const List * plist)
         return false;
 }
 
-bool ListIsFull(const List * plist)
+bool ListIsFull(const List *plist)
 {
-    Node * pt;
+    Node *pt;
     bool full;
     pt = (Node *)malloc(sizeof(Node));
     if (pt == NULL)
@@ -282,14 +281,14 @@ bool ListIsFull(const List * plist)
     else
         full = false;
     free(pt);
-    
+
     return full;
 }
 
-unsigned int ListItemCount(const List * plist)
+unsigned int ListItemCount(const List *plist)
 {
     unsigned int count = 0;
-    Node * pnode = *plist;
+    Node *pnode = *plist;
 
     while (pnode != NULL)
     {
@@ -300,12 +299,12 @@ unsigned int ListItemCount(const List * plist)
     return count;
 }
 
-bool ListAddItem(Item item, List * plist)
+bool ListAddItem(Item item, List *plist)
 {
-    Node * pnew;
-    Node * scan = *plist;
+    Node *pnew;
+    Node *scan = *plist;
 
-    pnew = (Node *) malloc(sizeof(Node));
+    pnew = (Node *)malloc(sizeof(Node));
     if (pnew == NULL)
         return false;
 
@@ -323,9 +322,9 @@ bool ListAddItem(Item item, List * plist)
     return true;
 }
 
-void ListTraverse(const List * plist, void(*pfun)(Item item))
+void ListTraverse(const List *plist, void (*pfun)(Item item))
 {
-    Node * pnode = *plist;
+    Node *pnode = *plist;
 
     while (pnode != NULL)
     {
@@ -334,9 +333,9 @@ void ListTraverse(const List * plist, void(*pfun)(Item item))
     }
 }
 
-void EmptyTheList(List * plist)
+void EmptyTheList(List *plist)
 {
-    Node * psave;
+    Node *psave;
 
     while (*plist != NULL)
     {
@@ -346,7 +345,7 @@ void EmptyTheList(List * plist)
     }
 }
 
-static void CopyToNode(Item item, Node * pnode)
+static void CopyToNode(Item item, Node *pnode)
 {
     pnode->item = item;
 }
