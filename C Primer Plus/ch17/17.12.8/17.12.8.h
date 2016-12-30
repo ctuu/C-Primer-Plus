@@ -3,44 +3,55 @@
 #include <stdbool.h>
 
 #define SLEN 20
-typedef struct item
-{
-    char petname[SLEN];
-    char petkind[SLEN];
-} Item;
-
+#define TSIZE 45
 #define MAXITEMS 10
 
 typedef struct trnode
 {
-    Item item[MAXITEMS];
+    char petname[SLEN];
+    List list;
     int ct;
-    struct trnode * left;
-    struct trnode * right;
+    struct trnode *left;
+    struct trnode *right;
 } Trnode;
 
 typedef struct tree
 {
-    Trnode * root;
+    Trnode *root;
     int size;
 } Tree;
 
-void InitializeTree(Tree * ptree);
+struct kind
+{
+    char petkind[SLEN];
+};
 
-bool TreeIsEmpty(const Tree * ptree);
+typedef struct kind Item;
 
-bool TreeIsFull(const Tree * ptree);
+typedef struct node
+{
+    Item item;
+    struct node *next;
+} Node;
 
-int TreeItemCount(const Tree * ptree);
+typedef Node *List;
 
-bool AddItem(const Item * pi, Tree * ptree);
+void InitializeTree(Tree *ptree);
+bool TreeIsEmpty(const Tree *ptree);
+bool TreeIsFull(const Tree *ptree);
+int TreeItemCount(const Tree *ptree);
+bool TreeAddItem(const Item *pi, Tree *ptree);
+bool InTree(const Item *pi, const Tree *ptree);
+bool DeleteItem(const Item *pi, Tree *ptree);
+void TreeTraverse(const Tree *ptree, void (*pfun)(Item item));
+void DeleteAll(Tree *ptree);
 
-bool InTree(const Item * pi, const Tree * ptree);
-
-bool DeleteItem(const Item * pi, Tree * ptree);
-
-void Traverse(const Tree * ptree, void(*pfun)(Item item));
-
-void DeleteAll(Tree * ptree);
+void InitializeList(List *plist);
+bool ListIsEmpty(const List *plist);
+bool ListIsFull(const List *plist);
+unsigned int ListItemCount(const List *plist);
+bool ListAddItem(Item item, List *plist);
+void ListTraverse(const List *plist, void (*pfun)(Item item));
+void EmptyTheList(List *plist);
 
 #endif
