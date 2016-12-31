@@ -5,19 +5,12 @@
 
 static void CopyToNode(Item item, Node *pnode);
 
-typedef struct pair
-{
-    Trnode *parent;
-    Trnode *child;
-} Pair;
-
 static Trnode *MakeNode(const Item *pi);
-static bool ToLeft(const Item *i1, const Item *i2);
-static bool ToRight(const Item *i1, const Item *i2);
+static bool ToLeft(const char i1[], const char i2[]);
+static bool ToRight(const char i1[], const char i2[]);
 static void AddNode(Trnode *new_node, Trnode *root);
 static void InOrder(const Trnode *root, void (*pfun)(Item item));
-static Pair SeekItem(const Item *pi, const Tree *ptree);
-static void DeleteNode(Trnode **ptr);
+static void DeleteNode(const Item *pi, Trnode **ptr);
 static void DeleteAllNodes(Trnode *ptr);
 
 void InitializeTree(Tree *ptree)
@@ -56,11 +49,10 @@ bool TreeAddItem(const Item *pi, Tree *ptree)
         fprintf(stderr, "Tree is full\n");
         return false;
     }
-
-    if ((exist_node = SeekItem(pi, ptree).child) != NULL)
+    if ((exist_node = TreeSeekItem(pi, ptree).child) != NULL)
     {
         //name exist & add node to linklist
-        ListAddItem(pi, exist_node->list);
+        ListAddItem(*pi, &(exist_node->list));
     }
     else
     {
@@ -83,23 +75,23 @@ bool TreeAddItem(const Item *pi, Tree *ptree)
 
 bool InTree(const Item *pi, const Tree *ptree)
 {
-    return (SeekItem(pi, ptree).child == NULL) ? false : true;
+    return (TreeSeekItem(pi, ptree).child == NULL) ? false : true;
 }
 
-bool DeleteItem(const Item *pi, Tree *ptree)
+bool TreeDeleteItem(const Item *pi, Tree *ptree)
 {
-    Pair look;
+    TPair look;
 
-    look = SeekItem(pi, ptree);
+    look = TreeSeekItem(pi, ptree);
     if (look.child == NULL)
         return false;
 
     if (look.parent == NULL)
-        DeleteNode(&ptree->root);
+        DeleteNode(pi, &ptree->root);
     else if (look.parent->left == look.child)
-        DeleteNode(&look.parent->left);
+        DeleteNode(pi, &look.parent->left);
     else
-        DeleteNode(&look.parent->right);
+        DeleteNode(pi, &look.parent->right);
     ptree->size--;
 
     return true;
@@ -124,7 +116,7 @@ static void InOrder(const Trnode *root, void (*pfun)(Item item))
     if (root != NULL)
     {
         InOrder(root->left, pfun);
-        ListTraverse(root->list, (*pfun))
+        ListTraverse(&(root->list), (*pfun));
         //(*pfun)(root->list->node->item);
         InOrder(root->right, pfun);
     }
@@ -146,14 +138,14 @@ static void DeleteAllNodes(Trnode *root)
 
 static void AddNode(Trnode *new_node, Trnode *root)
 {
-    if (ToLeft(&new_node->item, &root->item))
+    if (ToLeft(new_node->petname, root->petname))
     {
         if (root->left == NULL)
             root->left = new_node;
         else
             AddNode(new_node, root->left);
     }
-    else if (ToRight(&new_node->item, &root->item))
+    else if (ToRight(new_node->petname, root->petname))
     {
         if (root->right == NULL)
             root->right = new_node;
@@ -167,17 +159,17 @@ static void AddNode(Trnode *new_node, Trnode *root)
     }
 }
 
-static bool ToLeft(const Item *i1, const Item *i2)
+static bool ToLeft(const char i1[], const char i2[])
 {
-    if (strcmp(i1->petname, i2->petname) < 0)
+    if (strcmp(i1, i2) < 0)
         return true;
     else
         return false;
 }
 
-static bool ToRight(const Item *i1, const Item *i2)
+static bool ToRight(const char i1[], const char i2[])
 {
-    if (strcmp(i1->petname, i2->petname) > 0)
+    if (strcmp(i1, i2) > 0)
         return true;
     else
         return false;
@@ -193,9 +185,9 @@ static Trnode *MakeNode(const Item *pi)
     //CREATE A LINKLIST
     if (new_node != NULL)
     {
-        new_node->petname = *pi->petname;
+        sprintf(new_node->petname, "%s", pi->petname);
         new_node->list = pet;
-        ListAddItem(pi, new_node->list);
+        ListAddItem(*pi, &new_node->list);
         new_node->left = NULL;
         new_node->right = NULL;
     }
@@ -203,35 +195,36 @@ static Trnode *MakeNode(const Item *pi)
     return new_node;
 }
 
-static Pair SeekItem(const Item *pi, const Tree *ptree)
+TPair TreeSeekItem(const Item *pi, const Tree *ptree)
 {
-    Pair look;
+    TPair look;
     look.parent = NULL;
     look.child = ptree->root;
 
     if (look.child == NULL)
         return look;
-
     while (look.child != NULL)
     {
-        if (ToLeft(pi, &(look.child->item)))
+        if (ToLeft(pi->petname, look.child->petname))
         {
             look.parent = look.child;
             look.child = look.child->left;
         }
-        else if (ToRight(pi, &(look.child->item)))
+        else if (ToRight(pi->petname, look.child->petname))
         {
             look.parent = look.child;
             look.child = look.child->right;
         }
         else
+        {
             break;
+        }
     }
 
     return look;
 }
 
-static void DeleteNode(Trnode **ptr)
+static void DeleteNode(const Item *pi, Trnode **ptr)
 {
     Trnode *temp;
 
@@ -353,4 +346,42 @@ void EmptyTheList(List *plist)
 static void CopyToNode(Item item, Node *pnode)
 {
     pnode->item = item;
+}
+
+LPair ListSeekItem(const Item *pi, const List *plist)
+{
+    LPair look;
+    look.parent = NULL;
+    look.child = plist;
+    if (look.child == NULL)
+        return look;
+    while (look.child != NULL)
+    {
+        if (strcmp(pi->petkind, look.child->item->petkind) != 0)
+        {
+            look.parent = look.child;
+            look.child = look.child->next;
+        }
+        else
+            break;
+    }
+    return look;
+}
+
+bool ListDeleteItem(const Item *pi, List *plist)
+{
+    Lpair look;
+    look = ListSeekItem(pi, plist);
+    if (look.child == NULL)
+        return false;
+
+    if (look.parent == NULL)
+        
+    else if (look.parent->left == look.child)
+        DeleteNode(pi, &look.parent->left);
+    else
+        DeleteNode(pi, &look.parent->right);
+    ptree->size--;
+
+    return true;
 }

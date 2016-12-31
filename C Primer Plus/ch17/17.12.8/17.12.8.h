@@ -34,15 +34,28 @@ typedef struct tree
     int size;
 } Tree;
 
+typedef struct pair
+{
+    Node *parent;
+    Node *child;
+} TPair;
+
+typedef struct Listpair
+{
+    Trnode *parent;
+    Trnode *child;
+} LPair;
+
 void InitializeTree(Tree *ptree);
 bool TreeIsEmpty(const Tree *ptree);
 bool TreeIsFull(const Tree *ptree);
 int TreeItemCount(const Tree *ptree);
 bool TreeAddItem(const Item *pi, Tree *ptree);
 bool InTree(const Item *pi, const Tree *ptree);
-bool DeleteItem(const Item *pi, Tree *ptree);
+bool TreeDeleteItem(const Item *pi, Tree *ptree);
 void TreeTraverse(const Tree *ptree, void (*pfun)(Item item));
 void DeleteAll(Tree *ptree);
+TPair TreeSeekItem(const Item *pi, const Tree *ptree);
 
 //======================================================
 
@@ -53,5 +66,7 @@ unsigned int ListItemCount(const List *plist);
 bool ListAddItem(Item item, List *plist);
 void ListTraverse(const List *plist, void (*pfun)(Item item));
 void EmptyTheList(List *plist);
+bool ListDeleteItem(const Item *pi, List *plist);
+LPair ListSeekItem(const Item *pi, const List *plist);
 
 #endif

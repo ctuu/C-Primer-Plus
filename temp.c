@@ -2,9 +2,9 @@
 #include <string.h>
 int main(void)
 {
-    int k = -5;
-    if (k < 0)
-     k = -k;
-    printf("%d", k);
+    char a[10] = "ads";
+    char b[10];
+    sprintf(b, "%s", a);
+    puts(b);
     return 0;
 }
