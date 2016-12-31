@@ -6,7 +6,7 @@
 #define TSIZE 45
 #define MAXITEMS 10
 
-typedef struct item
+typedef struct pets
 {
     char petname[SLEN];
     char petkind[SLEN];
@@ -14,7 +14,7 @@ typedef struct item
 
 typedef struct node
 {
-    char petkind[SLEN];
+    Item item;
     struct node *next;
 } Node;
 
@@ -24,7 +24,6 @@ typedef struct trnode
 {
     char petname[SLEN];
     List list;
-    int ct;
     struct trnode *left;
     struct trnode *right;
 } Trnode;

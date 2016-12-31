@@ -79,7 +79,7 @@ void addpet(Tree * pt)
         s_gets(temp.petkind, SLEN);
         uppercase(temp.petname);
         uppercase(temp.petkind);
-        AddItem(&temp, pt);
+        TreeAddItem(&temp, pt);
     }
 }
 
@@ -88,7 +88,7 @@ void showpets(const Tree * pt)
     if (TreeIsEmpty(pt))
         puts("No entries!");
     else
-        Traverse(pt, printitem);
+        TreeTraverse(pt, printitem);
 }
 
 void printitem(Item item)
@@ -108,10 +108,7 @@ void findpet(const Tree * pt)
 
     puts("Please enter name of pet you wish to find:");
     s_gets(temp.petname, SLEN);
-    puts("Please enter pet kind:");
-    s_gets(temp.petkind, SLEN);
     uppercase(temp.petname);
-    uppercase(temp.petkind);
     printf("%s the %s ", temp.petname, temp.petkind);
     if (InTree(&temp, pt))
         printf("is a member.\n");

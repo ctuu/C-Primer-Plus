@@ -124,7 +124,8 @@ static void InOrder(const Trnode *root, void (*pfun)(Item item))
     if (root != NULL)
     {
         InOrder(root->left, pfun);
-        (*pfun)(root->item);
+        ListTraverse(root->list, (*pfun))
+        //(*pfun)(root->list->node->item);
         InOrder(root->right, pfun);
     }
 }
@@ -137,6 +138,7 @@ static void DeleteAllNodes(Trnode *root)
     {
         pright = root->right;
         DeleteAllNodes(root->left);
+        free(root->list);
         free(root);
         DeleteAllNodes(pright);
     }
@@ -193,7 +195,7 @@ static Trnode *MakeNode(const Item *pi)
     {
         new_node->petname = *pi->petname;
         new_node->list = pet;
-        new_node->ct = 0;
+        ListAddItem(pi, new_node->list);
         new_node->left = NULL;
         new_node->right = NULL;
     }
@@ -237,12 +239,14 @@ static void DeleteNode(Trnode **ptr)
     {
         temp = *ptr;
         *ptr = (*ptr)->right;
+        free(temp->list);
         free(temp);
     }
     else if ((*ptr)->right == NULL)
     {
         temp = *ptr;
         *ptr = (*ptr)->left;
+        free(temp->list);
         free(temp);
     }
     else
@@ -252,6 +256,7 @@ static void DeleteNode(Trnode **ptr)
         temp->right = (*ptr)->right;
         temp = *ptr;
         *ptr = (*ptr)->left;
+        free(temp->list);
         free(temp);
     }
 }
