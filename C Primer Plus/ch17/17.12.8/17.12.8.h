@@ -34,17 +34,17 @@ typedef struct tree
     int size;
 } Tree;
 
-typedef struct pair
+typedef struct lpair
 {
     Node *parent;
     Node *child;
-} TPair;
+} LPair;
 
-typedef struct Listpair
+typedef struct pair
 {
     Trnode *parent;
     Trnode *child;
-} LPair;
+} TPair;
 
 void InitializeTree(Tree *ptree);
 bool TreeIsEmpty(const Tree *ptree);

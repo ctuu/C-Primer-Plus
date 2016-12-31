@@ -230,27 +230,37 @@ static void DeleteNode(const Item *pi, Trnode **ptr)
 
     if ((*ptr)->left == NULL)
     {
-        temp = *ptr;
-        *ptr = (*ptr)->right;
-        free(temp->list);
-        free(temp);
+        ListDeleteItem(pi, &temp->list);
+        if (ListIsEmpty(&temp->list))
+        {
+            temp = *ptr;
+            *ptr = (*ptr)->right;
+            free(temp);
+        }
     }
     else if ((*ptr)->right == NULL)
     {
-        temp = *ptr;
-        *ptr = (*ptr)->left;
-        free(temp->list);
-        free(temp);
+        ListDeleteItem(pi, &temp->list);
+        if (ListIsEmpty(&temp->list))
+        {
+            temp = *ptr;
+            *ptr = (*ptr)->left;
+            free(temp);
+        }
     }
     else
     {
-        for (temp = (*ptr)->left; temp->right != NULL; temp = temp->right)
-            continue;
-        temp->right = (*ptr)->right;
-        temp = *ptr;
-        *ptr = (*ptr)->left;
-        free(temp->list);
-        free(temp);
+        ListDeleteItem(pi, &temp->list);
+        if (ListIsEmpty(&temp->list))
+        {
+            for (temp = (*ptr)->left; temp->right != NULL; temp = temp->right)
+                continue;
+            temp->right = (*ptr)->right;
+            temp = *ptr;
+            *ptr = (*ptr)->left;
+
+            free(temp);
+        }
     }
 }
 
@@ -352,12 +362,12 @@ LPair ListSeekItem(const Item *pi, const List *plist)
 {
     LPair look;
     look.parent = NULL;
-    look.child = plist;
+    look.child = *plist;
     if (look.child == NULL)
         return look;
     while (look.child != NULL)
     {
-        if (strcmp(pi->petkind, look.child->item->petkind) != 0)
+        if (strcmp(pi->petkind, look.child->item.petkind) != 0)
         {
             look.parent = look.child;
             look.child = look.child->next;
@@ -370,18 +380,23 @@ LPair ListSeekItem(const Item *pi, const List *plist)
 
 bool ListDeleteItem(const Item *pi, List *plist)
 {
-    Lpair look;
+    LPair look;
+    Node *temp;
     look = ListSeekItem(pi, plist);
     if (look.child == NULL)
         return false;
 
     if (look.parent == NULL)
-        
-    else if (look.parent->left == look.child)
-        DeleteNode(pi, &look.parent->left);
+    {
+        temp = look.child;
+        *plist = look.child->next;
+        free(temp);
+    }
     else
-        DeleteNode(pi, &look.parent->right);
-    ptree->size--;
-
+    {
+        temp = look.child;
+        look.parent->next = look.child->next;
+        free(temp);
+    }
     return true;
 }
