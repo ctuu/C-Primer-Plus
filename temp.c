@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdarg.h>
 int main(void)
 {
-    char a[10] = "ads";
-    char b[10];
-    sprintf(b, "%s", a);
-    puts(b);
+    // char *p = "hello";
+    printf("%d", 1 % 4);
     return 0;
 }
